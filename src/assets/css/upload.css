@@ -1,0 +1,33 @@
+.uppy-container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 5em;
+    padding: 1em;
+}
+.uppy-container .uppy-dashboard{
+    max-width: 100%;
+}
+.uppy-container .uppy-dashboard .uppy-Dashboard-browse{
+    height: auto;
+}
+.uppy-container .uppy-buttons{
+    display: flex;
+    justify-content: center;
+    
+ }
+.uppy-container .uppy-buttons button{
+   margin: 1em;
+   
+}
+.uppy-Dashboard-inner {
+    max-height: 350px !important;
+}
+.uppy-Dashboard-dropFilesTitle {
+    font-size: 20px !important;
+}
+.uppy-Dashboard-progressindicators {
+    display: none !important;
+}
