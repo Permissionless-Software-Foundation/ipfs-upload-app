@@ -2,6 +2,10 @@
 import React, { Component } from "react"
 import PropTypes from "prop-types"
 import { newFile } from '../../services/files'
+import QrCode from './qr.js'
+
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 import NOTIFICATION from '../../lib/notification'
 const Notification = new NOTIFICATION()
 
@@ -64,6 +68,11 @@ export class UploadForm extends React.Component {
             loaded: true,
             fileSize: '',
             fileData: [],
+            bchAddr: '',
+            hostingCostUSD:'',
+            hostingCostBCH:'',
+            hostingCostSAT:'',
+            section: 'uppy' // uppy or qr
         }
     }
 
@@ -71,28 +80,38 @@ export class UploadForm extends React.Component {
 
         return (
             <>
-                <div className="grid-wrapper uppy-container">
+                {_this.state.section === 'uppy' ?
+                    <div className="grid-wrapper uppy-container">
 
-                    <div className="col-6 uppy-dashboard">
-                        <Dashboard
-                            uppy={uppy}
-                            {..._this.props}>
+                        <div className="col-6 uppy-dashboard">
+                            <Dashboard
+                                uppy={uppy}
+                                {..._this.props}>
 
-                        </Dashboard>
-
-                        <div className="col-6 uppy-buttons">
-                            <button
-                                onClick={_this.resetValues}>
-                                Reset
-                            </button>
-                            <button
-                                onClick={_this.submitData}>
-                                Submit
-                            </button>
+                            </Dashboard>
+                            <div className="col-6 uppy-progress">
+                            {!_this.state.loaded && <CircularProgress />}
+                            </div>
+                            <div className="col-6 uppy-buttons">
+                                <button
+                                    onClick={_this.resetValues}>
+                                    Reset
+                                 </button>
+                                <button
+                                    onClick={_this.submitData}>
+                                    Submit
+                                 </button>
+                            </div>
                         </div>
                     </div>
-
-                </div>
+                    :
+                    <QrCode
+                        bchAddr={_this.state.bchAddr}
+                        hostingCostUSD={_this.state.hostingCostUSD}
+                        hostingCostBCH ={_this.state.hostingCostBCH}
+                        changeSection={_this.changeSection}
+                    />
+                }
             </>
         )
 
@@ -109,7 +128,12 @@ export class UploadForm extends React.Component {
             },
         }))
     }
+    changeSection(sec) {
 
+        _this.setState({
+            section: sec ? sec : 'uppy'
+        })
+    }
 
     componentWillUnmount() {
         this.uppy && this.uppy.close()
@@ -118,7 +142,7 @@ export class UploadForm extends React.Component {
         const file = {
             schemaVersion: 1,
             // userIdUpload: getUser()._id,
-            size: _this.state.fileSize ? _this.state.fileSize: ''
+            size: _this.state.fileSize ? _this.state.fileSize : ''
         }
         return file
 
@@ -127,7 +151,9 @@ export class UploadForm extends React.Component {
     // Function refactored
     async submitData() {
         try {
-
+            _this.setState({
+                loaded: false
+            })
             //uppy error handler
             await _this.uppyHandler()
 
@@ -143,11 +169,30 @@ export class UploadForm extends React.Component {
                 throw new Error("Fail to create file")
             }
 
+            _this.setState({
+                bchAddr: resultFile.file.bchAddr,
+                hostingCostUSD: resultFile.hostingCostUSD,
+                hostingCostBCH: resultFile.hostingCostBCH,
+                hostingCostSAT: resultFile.hostingCostSAT
+
+            })
+
             _this.resetValues()
+
+            
+            _this.setState({
+                loaded: true
+            })
+
             _this.Notification.notify('Upload', 'Success!!', 'success')
 
+            // Go to display QR Code
+            _this.changeSection('qr')
 
         } catch (error) {
+            _this.setState({
+                loaded: true
+            })
             console.error(error)
             _this.Notification.notify('Upload', 'Error', 'danger')
         }

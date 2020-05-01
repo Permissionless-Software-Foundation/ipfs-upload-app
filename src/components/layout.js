@@ -5,6 +5,8 @@ import PropTypes from 'prop-types'
 
 import '../assets/scss/main.scss'
 import '../assets/css/upload.css'
+import '../assets/css/qr.css'
+
 
 import ReactNotification from 'react-notifications-component'
 import 'react-notifications-component/dist/theme.css'
