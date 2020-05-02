@@ -31,3 +31,8 @@
 .uppy-Dashboard-progressindicators {
     display: none !important;
 }
+.uppy-progress{
+    display: flex;
+    justify-content: center;
+    margin: 1em;
+}
