@@ -19,7 +19,7 @@
     "gatsby-source-filesystem": "^2.0.32",
     "gatsby-transformer-json": "^2.1.11",
     "gatsby-transformer-remark": "^2.3.12",
-    "node-sass": "^4.12.0",
+    "node-sass": "^4.14.1",
     "qrcode.react": "^1.0.0",
     "react": "^16.8.5",
     "react-collapsible": "^2.6.0",
@@ -36,7 +36,8 @@
     "build": "gatsby build --prefix-paths",
     "develop": "gatsby develop",
     "format": "prettier --write '**/*.js'",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "gatsby develop"
   },
   "devDependencies": {
     "prettier": "^1.14.2"
