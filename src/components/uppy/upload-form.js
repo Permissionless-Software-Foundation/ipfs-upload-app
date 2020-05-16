@@ -46,12 +46,13 @@ uppy.use(Tus, { endpoint: `${SERVER}/uppy-files` })
 uppy.on('upload', data => {
   let IDs = data.fileIDs
 
-  IDs.forEach(function(fileId, index) {
+  IDs.forEach(function (fileId, index) {
     const indexName = fileId.lastIndexOf('/')
     const fileName = fileId.substring(indexName, fileId.length)
     uppy.setFileMeta(fileId, { fileNameToEncrypt: fileName })
   })
 })
+
 
 let _this
 
@@ -70,7 +71,10 @@ export class UploadForm extends React.Component {
       hostingCostUSD: '',
       hostingCostBCH: '',
       hostingCostSAT: '',
-      section: 'uppy', // uppy or qr
+      section: 'uppy', // uppy or qr,
+      fileId: '',
+
+
     }
   }
 
@@ -91,13 +95,17 @@ export class UploadForm extends React.Component {
             </div>
           </div>
         ) : (
-          <QrCode
-            bchAddr={_this.state.bchAddr}
-            hostingCostUSD={_this.state.hostingCostUSD}
-            hostingCostBCH={_this.state.hostingCostBCH}
-            changeSection={_this.changeSection}
-          />
-        )}
+            <div>
+              <QrCode
+                bchAddr={_this.state.bchAddr}
+                hostingCostUSD={_this.state.hostingCostUSD}
+                hostingCostBCH={_this.state.hostingCostBCH}
+                changeSection={_this.changeSection}
+                resetValues={_this.resetValues}
+                fileId={_this.state.fileId}
+              />
+            </div>
+          )}
       </>
     )
   }
@@ -142,8 +150,10 @@ export class UploadForm extends React.Component {
       _this.setState({
         loaded: false,
       })
+
       //uppy error handler
-      await _this.uppyHandler()
+      const uppyUpload = await _this.uppyHandler()
+      console.log('uppyUpload', uppyUpload)
 
       // Create a new file model (locally)
       const file = _this.createFileModel()
@@ -169,9 +179,12 @@ export class UploadForm extends React.Component {
 
       _this.setState({
         loaded: true,
+        fileId: resultFile.file._id
       })
 
       _this.Notification.notify('Upload', 'Success!!', 'success')
+
+
 
       // Go to display QR Code
       _this.changeSection('qr')
@@ -180,10 +193,11 @@ export class UploadForm extends React.Component {
         loaded: true,
       })
       console.error(error)
-      _this.Notification.notify('Upload', 'Error', 'danger')
+      if (error.message) _this.Notification.notify('Upload', error.message, 'danger')
+      else _this.Notification.notify('Upload', 'Error', 'danger')
     }
   }
-
+  // Checking uploaded file status
   async uppyHandler() {
     return new Promise((resolve, reject) => {
       try {
@@ -193,13 +207,13 @@ export class UploadForm extends React.Component {
           try {
             // Upload failed due to no file being selected.
             if (result.successful.length <= 0 && result.failed.length <= 0) {
-              return reject('File is required')
+              return reject(new Error('File is required'))
               //throw new Error('File is required')
             } else if (result.failed.length > 0) {
               // Upload failed (for some other reason)
 
               // Error updload some file
-              return reject('Fail to upload Some Files')
+              return reject(new Error('Fail to upload Some Files'))
 
               //throw new Error('Fail to upload Some Files')
             }
@@ -218,7 +232,7 @@ export class UploadForm extends React.Component {
             throw error
           }
           resolve(true)
-        })
+        }).catch(err => reject(new Error(err.message)))
       } catch (error) {
         return reject(error)
       }
@@ -245,13 +259,17 @@ export class UploadForm extends React.Component {
     })
     console.log('FILED:', fileData)
   }
-
+  // Reset state by default
   resetValues() {
     _this.setState(prevState => ({
       ...prevState,
       fileSize: '',
+      hash: '',
+      msgStatus: ' checking for payment...'
     }))
 
     uppy && uppy.reset()
   }
+
+
 }
