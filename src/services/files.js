@@ -35,3 +35,26 @@ export const newFile = async (file) => {
         return false
     }
 }
+
+
+// Get  metadatas by id
+export const getFileById = async fileId => {
+  
+    // Try to get  metadata by id
+    try {
+      const options = {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      }
+      const resp = await fetch(`${SERVER}/files/${fileId}`, options)
+      if (resp.ok) {
+        return resp.json()
+      } else {
+        return false
+      }
+    } catch (e) {
+      return false
+    }
+  }

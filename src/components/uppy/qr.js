@@ -1,8 +1,11 @@
 /* eslint-disable */
 import React, { Component } from "react"
 import PropTypes from "prop-types"
+import CircularProgress from '@material-ui/core/CircularProgress'
+import { getFileById } from '../../services/files'
 
 var QRCode = require('qrcode.react')
+const cloudUrl = 'https://gateway.temporal.cloud/ipfs/'
 
 let _this
 
@@ -13,7 +16,10 @@ class QrCode extends React.Component {
         this.Notification = Notification
 
         this.state = {
-
+            msgStatus: 'Checking for payment...',
+            hash: '',
+            startedLoop: false,
+            cloudLink: ''
         }
     }
 
@@ -42,15 +48,45 @@ class QrCode extends React.Component {
                     </div>
 
                     <div className="col-12 addr-container">
-
+                        {/* Display BCH Address*/}
                         <p> <b>{_this.props.bchAddr}</b></p>
 
                     </div>
 
+                    {
+                        _this.state.startedLoop &&
+                        <div className="status-container col-12">
+                            {/* Show progress or check icon*/}
+                            {!_this.state.hash ?
+                                <CircularProgress /> :
+                                <div className="far fa-check-circle"></div>
+
+                            }
+                            {/* Show status message*/}
+
+                            <p className="status-msg">{_this.state.msgStatus}</p>
+
+                            {/* Show link to cloud page*/}
+                            {_this.state.cloudLink &&
+                                <div>
+                                    <span>File can be downloaded from: </span>
+                                    <br />
+                                    <p
+                                        className="cloud-link"
+                                        onClick={_this.goToCloud}>
+
+                                        {_this.state.cloudLink}
+                                    </p>
+                                </div>
+                            }
+
+                        </div>
+                    }
+
                     <div className="col-12 ">
                         <button
                             className="btn-back"
-                            onClick={() => _this.props.changeSection('uppy')}>
+                            onClick={_this.back}>
                             Back
                            </button>
                     </div>
@@ -61,12 +97,53 @@ class QrCode extends React.Component {
 
     }
 
-
+    goToCloud() {
+        window.open(`${cloudUrl}/${_this.state.hash}`, '_blank')
+    }
+    back() {
+        _this.props.changeSection('uppy')
+        _this.props.resetValues()
+    }
 
     componentDidMount() {
 
+        _this.checkHashLoop(_this.props.fileId)
+
 
     }
+    async checkHashLoop(fileId) {
+        let hash
+        const myInterval = setInterval(async () => {
+            _this.setState({
+                startedLoop: true
+            })
+            hash = await _this.checkHash(fileId)
+
+            if (hash) {
+
+                _this.setState({
+                    msgStatus: 'File uploaded successfully!',
+                    hash: hash,
+                    cloudLink: `${cloudUrl}/${hash}`
+                })
+                clearInterval(myInterval);
+            }
+        }, 10000);
+
+    }
+
+    async checkHash(fileId) {
+        let hash = ''
+        const resultFile = await getFileById(fileId)
+
+        const fileData = resultFile.file
+        if (fileData && fileData.payloadLink) {
+            hash = fileData.payloadLink
+        }
+
+        return hash
+    }
+
 
 }
 
@@ -74,7 +151,10 @@ QrCode.propTypes = {
     bchAddr: PropTypes.string.isRequired,
     hostingCostBCH: PropTypes.number.isRequired,
     hostingCostUSD: PropTypes.number.isRequired,
-    changeSection: PropTypes.func.isRequired
+    changeSection: PropTypes.func.isRequired,
+    resetValues: PropTypes.func.isRequired,
+    fileId: PropTypes.string.isRequired
+
 
 }
 export default QrCode

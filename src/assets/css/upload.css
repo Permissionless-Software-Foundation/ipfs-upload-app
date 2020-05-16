@@ -36,3 +36,7 @@
     justify-content: center;
     margin: 1em;
 }
+
+.MuiCircularProgress-svg{
+    color:white
+}
