@@ -1,9 +1,5 @@
 /* CSS Grid */
 
-.mb-5 {
-	margin-bottom: 2em;
-}
-
 @media screen and (min-width: 981px) {
 
 	.grid-wrapper {
@@ -11,7 +7,7 @@
 		grid-gap: 0 2.25em;
 		grid-template-columns: repeat(12, 1fr);
 		margin: 0 auto;
-		width: 100%;
+		width: 90%;
 	}
 
 	/* Generate Columns 1 through 12 */
@@ -34,8 +30,9 @@
 
 @media screen and (min-width: 1141px) {
 
-	// .grid-wrapper {
-	// 	grid-gap: 0 3em;
-	// }
+	.grid-wrapper {
+		grid-gap: 0 3em;
+		width: 60em;
+	}
 
 }

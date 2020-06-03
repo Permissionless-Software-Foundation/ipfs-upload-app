@@ -2,29 +2,48 @@
 
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Link } from 'gatsby'
+//import { Link, navigate } from 'gatsby'
 
-const Menu = (props) => (
-    <nav id="menu">
-        <div className="inner">
-            <ul className="links">
-                <li><Link onClick={props.onToggleMenu} to="/">Home</Link></li>
-                <li><Link onClick={props.onToggleMenu} to="/landing">Landing</Link></li>
-                <li><Link onClick={props.onToggleMenu} to="/generic">Generic</Link></li>
-                <li><Link onClick={props.onToggleMenu} to="/elements">Elements</Link></li>
-                <li><Link onClick={props.onToggleMenu} to="/blog">Blog</Link></li>
-            </ul>
-            <ul className="actions vertical">
-                <li><Link to="/research" className="button special fit">Research</Link></li>
-                <li><a href="#" className="button fit">Log In</a></li>
-            </ul>
-        </div>
-        <a className="close" onClick={props.onToggleMenu} href="#!">Close</a>
-    </nav>
+const Menu = props => (
+  <nav id="menu">
+    <div className="inner">
+      <ul className="links">
+        <li>
+          <a href="http://fullstack.cash/">Home</a>
+        </li>
+
+        <li>
+          <a href="http://fullstack.cash/pricing">Pricing</a>
+        </li>
+
+        <li>
+          <a href="http://fullstack.cash/examples">Examples</a>
+        </li>
+
+        <li>
+          <a href="http://fullstack.cash/documentation">Documentation</a>
+        </li>
+
+        <li>
+          <a href="http://fullstack.cash/cashstrap">CashStrap</a>
+        </li>
+        <li>
+          <a href="http://fullstack.cash/contact">Contact</a>
+        </li>
+        <li>
+          <a href="http://fullstack.cash/free-access">Free Access</a>
+        </li>
+      </ul>
+    </div>
+
+    <a className="close" onClick={props.onToggleMenu} href="#!">
+      Close
+    </a>
+  </nav>
 )
 
 Menu.propTypes = {
-    onToggleMenu: PropTypes.func
+  onToggleMenu: PropTypes.func,
 }
 
 export default Menu
