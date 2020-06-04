@@ -4,112 +4,63 @@
 @import 'libs/skel';
 
 /*
-	Forty by HTML5 UP
+	Photon by HTML5 UP
 	html5up.net | @ajlkn
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 */
 
-/* Spotlights */
-
-	.spotlights {
-		> section {
-			&:after {
-				content: '';
-				display: block;
-				clear: both;
-			}
-
-			> .image {
-				float: left;
-			}
-
-			> .content {
-				float: left;
-			}
-		}
-	}
-
-/* Tiles */
-
-	.tiles {
-		&:after {
-			content: '';
-			display: block;
-			clear: both;
-		}
-
-		article {
-			@include padding(8em, 4em);
-			float: left;
-			height: auto;
-			max-height: none;
-			min-height: 0;
-		}
-	}
-
 /* Header */
 
 	#header {
-		.logo {
-			position: absolute;
-			top: 0;
-			left: 0;
-		}
+		$from: _palette(accent3-alt);
+		$to: _palette(accent6-alt);
 
-		nav {
-			position: absolute;
-			top: 0;
-			right: 0;
-		}
-	}
+		background-image: none;
+		filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr="#{$from}", endColorStr="#{$to}", GradientType=1);
+		position: relative;
 
-/* Banner */
-
-	#banner {
-		@include padding(6em, 0, (1em, 0, 0, 0));
-		background-attachment: scroll;
-		height: auto;
-		max-height: none;
-		min-height: 0;
-
-		> .inner {
-			.content {
-				display: block;
-
-				> * {
-					margin-left: 0;
-					margin: 0 0 _size(element-margin) 0;
-				}
-			}
-		}
-
-		&.major {
-			height: auto;
-			max-height: none;
-			min-height: 0;
-		}
-	}
-
-/* Contact */
-
-	#contact {
-		&:after {
+		&:before {
+			background-image:		url('images/overlay2.png'),		url('images/overlay3.svg');
+			background-position:	top left,							center center;
+			background-size:		auto,								cover;
 			content: '';
-			display: block;
-			clear: both;
+			height: 100%;
+			left: 0;
+			position: absolute;
+			top: 0;
+			width: 100%;
 		}
 
-		> .inner {
-			> * {
-				float: left;
-			}
+		> * {
+			position: relative;
+			z-index: 1;
 		}
 	}
 
-/* Menu */
+/* Footer */
 
-	#menu {
-		.inner {
-			margin: 0 auto;
+	#footer {
+		$from: _palette(accent6-alt);
+		$to: _palette(accent3-alt);
+
+		background-image: none;
+		filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr="#{$from}", endColorStr="#{$to}", GradientType=1);
+		position: relative;
+
+		&:before {
+			background-image:		url('images/overlay2.png'),		url('images/overlay4.svg');
+			background-position:	top left,							center center;
+			background-size:		auto,								cover;
+			content: '';
+			height: 100%;
+			left: 0;
+			position: absolute;
+			top: 0;
+			width: 100%;
+		}
+
+		> * {
+			position: relative;
+			z-index: 1;
 		}
 	}

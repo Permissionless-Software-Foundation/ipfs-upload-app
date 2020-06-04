@@ -6,88 +6,97 @@
 
 /* Contact */
 
-	#contact {
-		border-bottom: solid 1px _palette(border);
-		overflow-x: hidden;
+#contact {
+    background-color: _palette(bg-alt);
+    padding : 4em 2em 0 2em;
 
-		> .inner {
-			@include vendor('display', 'flex');
-			padding: 0 !important;
 
-			> :nth-child(2n - 1) {
-				@include padding(4em, 0, (0, 3em, 0, 0));
-				border-right: solid 1px _palette(border);
-				width: 60%;
-			}
+    > * {
+        border-top: solid 1px _palette(border);
 
-			> :nth-child(2n) {
-				padding-left: 3em;
-				width: 40%;
-			}
+        &:first-child {
+            border-top: 0;
+        }
 
-			> .split {
-				padding: 0;
+        // @include inner;
+    }
 
-				> * {
-					@include padding(3em, 0, (0, 0, 0, 3em));
-					position: relative;
+    &.alt {
+        background-color: transparent;
+        border-bottom: solid 1px _palette(border);
+    }
+    & h1 {
+        font-size: 2.5em;
+        width: calc(100% + .5em);
+        font-weight: 600;
+        margin: 0px;
+    }
+    & .major{
+        width: max-content;
+    }
+    & .major:after {
+        content: "";
+        display: block;
+        height: 2px;
+        margin: .325em 0 .5em;
+        width: 100%;
 
-					&:before {
-						border-top: solid 1px _palette(border);
-						content: '';
-						display: block;
-						margin-left: -3em;
-						position: absolute;
-						top: 0;
-						width: calc(100vw + 3em);
-					}
-				}
+    } 
+    .captcha-container{
+        -webkit-box-shadow: -1px 1px 7px 0px rgba(0,0,0,0.75);
+        -moz-box-shadow: -1px 1px 7px 0px rgba(0,0,0,0.75);
+        box-shadow: -1px 1px 7px 0px rgba(0,0,0,0.75);
+        max-width: 15%;
+        padding: 1em;
+        margin-left: 2px;
+    }
+    .contact-button{
+        width: 15%;
+        margin: 10px;
+        margin-bottom: 25px;
+        margin-left: 0px;
+    }
+    .captcha-content{
+        display: flex;
+        justify-content: center;
+    }
 
-				> :first-child {
-					&:before {
-						display: none;
-					}
-				}
-			}
-		}
 
-		@include breakpoint(medium) {
-			> .inner {
-				display: block;
+     @include breakpoint(xlarge) {
+        .captcha-container{
+            max-width: 15%;
+        }
+        .contact-button{
+            width: 15%;
+        }
+    }
 
-				> :nth-child(2n - 1) {
-					@include padding(4em, 0, (0, 0, 0, 0));
-					border-right: 0;
-					width: 100%;
-				}
+    @include breakpoint(large) {
+        .captcha-container{
+            max-width: 25%;
+        }
+        .contact-button{
+            width: 25%;
+        }
+    }
 
-				> :nth-child(2n) {
-					padding-left: 0;
-					width: 100%;
-				}
+    @include breakpoint(small) {
+        .captcha-container{
+            max-width: 35%;
+        }
+        .contact-button{
+            width: 35%;
+        }
+    }
 
-				> .split {
-					> * {
-						@include padding(3em, 0, (0, 0, 0, 0));
+    @include breakpoint(xsmall) {
+        .captcha-container{
+            max-width: 65%;
+        }
+        .contact-button{
+            width: 65%;
+        }
+    } 
+    
 
-						&:before {
-						}
-					}
-
-					> :first-child {
-						&:before {
-							display: block;
-						}
-					}
-				}
-			}
-		}
-
-		@include breakpoint(small) {
-			> .inner {
-				> :nth-child(2n - 1) {
-					@include padding(3em, 0, (0, 0, 0, 0));
-				}
-			}
-		}
-	}
+}

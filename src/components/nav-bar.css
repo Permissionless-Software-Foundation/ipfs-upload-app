@@ -1,0 +1,25 @@
+.content-navbar{
+    display: flex;
+    flex: 1;
+    justify-content: space-between;
+    border-bottom: 1px solid #d1c1e0;
+}
+.content-navbar span{
+    margin-left: 1em;
+    padding-bottom: 3px;
+    padding-top: 3px;
+}
+.content-navbar nav{
+    margin-right: 1em;
+    padding-bottom: 3px;
+    padding-top: 3px;
+    display: flex;
+    width: auto;
+}
+.content-navbar nav a{
+border-bottom: none!important;
+}
+.nav-link{
+    width: 60px;
+}
+
