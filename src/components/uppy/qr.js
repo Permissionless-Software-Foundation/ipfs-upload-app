@@ -55,7 +55,7 @@ class QrCode extends React.Component {
 
                     {
                         _this.state.startedLoop &&
-                        <div className="status-container col-12">
+                        <div className="status-container col-12" style={{backgroundColor: '#d6d6e1', padding: '25px'}}>
                             {/* Show progress or check icon*/}
                             {!_this.state.hash ?
                                 <CircularProgress /> :

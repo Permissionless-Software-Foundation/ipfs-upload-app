@@ -9,10 +9,10 @@ class Upload extends React.Component {
         return (
             <Layout>
                 <Helmet
-                    title="Gatsby Starter - Forty"
+                    title="IPFS File Hosting for BCH | FullStack.cash"
                     meta={[
-                        { name: 'description', content: 'Sample' },
-                        { name: 'keywords', content: 'sample, something' },
+                        { name: 'description', content: 'Pay BCH to have your files host on IPFS' },
+                        { name: 'keywords', content: 'ipfs, bch, bitcoin, bitcoin cash, file, hosting, upload' },
                     ]}
                 >
                 </Helmet>
