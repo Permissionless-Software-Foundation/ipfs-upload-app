@@ -124,7 +124,7 @@ class QrCode extends React.Component {
                 _this.setState({
                     msgStatus: 'File uploaded successfully!',
                     hash: hash,
-                    cloudLink: `${cloudUrl}/${hash}`
+                    cloudLink: `${cloudUrl}${hash}`
                 })
                 clearInterval(myInterval);
             }
